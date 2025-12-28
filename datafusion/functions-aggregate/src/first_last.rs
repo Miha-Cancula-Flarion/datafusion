@@ -1346,7 +1346,7 @@ impl Accumulator for TrivialLastValueAccumulator {
         if let Some(last) = filtered_states.last()
             && !last.is_empty()
         {
-            self.last = ScalarValue::try_from_array(last, 0)?;
+            self.last = ScalarValue::try_from_array(last, last.len() - 1)?;
             self.is_set = true;
         }
         Ok(())
