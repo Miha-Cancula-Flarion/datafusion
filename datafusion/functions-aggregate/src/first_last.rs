@@ -1649,6 +1649,9 @@ mod tests {
         let merged_state = first_accumulator.state()?;
         assert_eq!(merged_state.len(), state1.len());
 
+        // First Value comes from the first value of the first batch which is 0
+        assert_eq!(first_accumulator.evaluate()?, ScalarValue::Int64(Some(0)));
+
         // LastValueAccumulator
         let mut last_accumulator =
             TrivialLastValueAccumulator::try_new(&DataType::Int64, false)?;
@@ -1678,6 +1681,9 @@ mod tests {
 
         let merged_state = last_accumulator.state()?;
         assert_eq!(merged_state.len(), state1.len());
+
+        // Last value comes from the last value of the second batch which is 10
+        assert_eq!(last_accumulator.evaluate()?, ScalarValue::Int64(Some(10)));
 
         Ok(())
     }
